@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:head>
+        <style type="text/css">
+            label {display: inline-block; width: 8em; height: 2em}
+            .error{color: red; margin-left: 1ex}
+        </style>
+        <title>Customer registration (part1)</title>
+
+    </h:head>
+    <h:body>
+        <h1>Customer registration </h1>
+        <h3>Thank you! #{register.email} is successfully registered</h3>
+        <h3>Press the following button to register another customer.</h3>
+      <h:form>
+          
+
+        
+              <h:commandButton value="Start" action="#{register.start()}" />
+                
+      </h:form>
+    </h:body>
+</html>
+
