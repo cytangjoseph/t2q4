@@ -17,8 +17,9 @@
       <h:form>
           <h:panelGrid columns="3">  
           <h:outputLabel value="Email address:"/>
-          <h:inputText id="email" onclick="reset()" value="#{register.email}" 
+          <h:inputText id="email" value="#{register.email}" 
             label="email"  validatorMessage="Email is required">
+            <!-- check input is not empty -->  
             <f:validateRequired />
           </h:inputText>  
           <h:message for="email" style="color:red" />
