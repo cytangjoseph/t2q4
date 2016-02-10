@@ -65,9 +65,9 @@ public class register implements Serializable{
             aRealPath = aFacesContext.getExternalContext().getRealPath("/");
             String aRealPath2 = aRealPath.concat("/WEB-INF/data.txt");
             System.out.println("so the created path is: " + aRealPath2);
-            Path aPath2 = Paths.get(aRealPath2);
+            aPath = Paths.get(aRealPath2);
             try (OutputStream out = new BufferedOutputStream(
-                Files.newOutputStream(aPath2, CREATE, APPEND))){
+                Files.newOutputStream(aPath, CREATE, APPEND))){
                 out.write(data, 0, data.length);
         //        System.out.println("writing to file");
             } catch (IOException x) {
