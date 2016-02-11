@@ -49,17 +49,19 @@ public class register implements Serializable{
         String aContextName = aFacesContext.getExternalContext().getContextName();//not used
         //--getRealPath: Returns a String containg the real path for a given virtual path
         aRealPath = aFacesContext.getExternalContext().getRealPath("WEB-INF");
-        aFile = new File(aRealPath,"data.txt");
+        aFile = new File(aRealPath+File.separator+"data.txt");
         if (!aFile.exists()){
             try{
-            aFile.createNewFile();
+            aFile.createNewFile(); //create aFile if not exists
             }catch(IOException ex){
             }
         }
         
- //       if(aRealPath!=null){
+ 
+            aRealPath = aFacesContext.getExternalContext().getRealPath("WEB-INF/data.txt");
+            aPath = Paths.get(aRealPath);//obtain the real path of WEB-INF/data.txt
             System.out.println("real path exists, It is:  " + aRealPath);
-            aPath = Paths.get(aRealPath);
+            
         
             try (BufferedOutputStream out = new BufferedOutputStream(
                 Files.newOutputStream(aPath, CREATE, APPEND))){
@@ -69,22 +71,7 @@ public class register implements Serializable{
                 System.err.println(x);
             }
         } 
-// else {
-            //Path aPath = Paths.get(aRealPath);
-//            System.out.println("real path not exist");
-//            aRealPath = aFacesContext.getExternalContext().getRealPath("/");
-//            String aRealPath2 = aRealPath.concat("/WEB-INF/data.txt");
-//            System.out.println("so the created path is: " + aRealPath2);
-//            aPath = Paths.get(aRealPath2);
-//            try (OutputStream out = new BufferedOutputStream(
-//                Files.newOutputStream(aPath, CREATE, APPEND))){
-//                out.write(data, 0, data.length);
-        //        System.out.println("writing to file");
-//            } catch (IOException x) {
-//                System.err.println(x);
-//            }
-//        }
-//    }
+
     
     //getters and setters
  
