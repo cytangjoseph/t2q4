@@ -26,14 +26,13 @@ public class register implements Serializable{
     private String address;
     private String yob;
    
-    public void writeToFile() {
+    public void writeToFile(String email, String pass, String name, String address, String yob) {
 
-        Path aPath;
         String aRealPath;
         Boolean bool;
         File aFile=null;
         // Convert the string to a byte array
-        String s = this.email+"|"+this.pass+"|"+this.name + "|" + this.address + "|" + this.yob + "\r\n";
+        String s = email + "|" + pass + "|" + name + "|" + address + "|" + yob + "\r\n";
         byte data[] = s.getBytes();
         
         //--String path2 = FacesContext.getCurrentInstance().getExternalContext().getRealPath(
@@ -46,12 +45,13 @@ public class register implements Serializable{
         FacesContext aFacesContext = FacesContext.getCurrentInstance();
         String aContextName = aFacesContext.getExternalContext().getContextName();//not used
         //--getRealPath: Returns a String containg the real path for a given virtual path
+        //to obtain real path of /WEB-INF
         aRealPath = aFacesContext.getExternalContext().getRealPath("WEB-INF");
         //to make the real path for the WEB-INF/data.txt
         aFile = new File(aRealPath + File.separator + "data.txt");
         
         try{ 
-            FileWriter fw = new FileWriter(aFile,true);
+            FileWriter fw = new FileWriter(aFile,true);//create file if not exist, append mode
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(bw);
             pw.append(s);
@@ -92,7 +92,7 @@ public class register implements Serializable{
         this.setAddress(address);
         this.setYob(yob);
         System.out.println("email: " + getEmail() + ", password: " + pass + ", name: " + getName() + ", address: " + address + ", yob: " + getYob());
-        writeToFile();
+        writeToFile(email, pass, name, address, yob);
         return"success?faces-redirect=true";
     }
        
