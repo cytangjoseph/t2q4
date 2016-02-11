@@ -28,11 +28,10 @@ public class register implements Serializable{
    
     public void writeToFile() {
 
-        
-        System.out.println("now in writeToFile");
         Path aPath;
         String aRealPath;
-        
+        Boolean bool;
+        File aFile=null;
         // Convert the string to a byte array
         String s = this.email+"|"+this.pass+"|"+this.name + "|" + this.address + "|" + this.yob + "\r\n";
         byte data[] = s.getBytes();
@@ -47,32 +46,20 @@ public class register implements Serializable{
         FacesContext aFacesContext = FacesContext.getCurrentInstance();
         String aContextName = aFacesContext.getExternalContext().getContextName();//not used
         //--getRealPath: Returns a String containg the real path for a given virtual path
-        aRealPath = aFacesContext.getExternalContext().getRealPath("WEB-INF/data.txt");
-        if(aRealPath!=null){
-            System.out.println("real path exists, It is:  " + aRealPath);
-            aPath = Paths.get(aRealPath);
+        aRealPath = aFacesContext.getExternalContext().getRealPath("WEB-INF");
+        //to make the real path for the WEB-INF/data.txt
+        aFile = new File(aRealPath + File.separator + "data.txt");
         
-            try (OutputStream out = new BufferedOutputStream(
-                Files.newOutputStream(aPath, CREATE, APPEND))){
-                out.write(data, 0, data.length);
-                //System.out.println("path exists, " + data + "written to file" );
-            } catch (IOException x) {
-                System.err.println(x);
-            }
-        } else {
-            //Path aPath = Paths.get(aRealPath);
-            System.out.println("real path not exist");
-            aRealPath = aFacesContext.getExternalContext().getRealPath("/");
-            String aRealPath2 = aRealPath.concat("/WEB-INF/data.txt");
-            System.out.println("so the created path is: " + aRealPath2);
-            aPath = Paths.get(aRealPath2);
-            try (OutputStream out = new BufferedOutputStream(
-                Files.newOutputStream(aPath, CREATE, APPEND))){
-                out.write(data, 0, data.length);
-        //        System.out.println("writing to file");
-            } catch (IOException x) {
-                System.err.println(x);
-            }
+        try{ 
+            FileWriter fw = new FileWriter(aFile,true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
+            pw.append(s);
+            pw.close();
+            bw.close();
+            fw.close();
+        } catch(IOException ex) {
+            System.err.println(ex);
         }
     }
     
