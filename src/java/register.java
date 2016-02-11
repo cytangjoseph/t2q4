@@ -3,14 +3,9 @@
 import javax.inject.Named;//CDI bean
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import static java.nio.file.StandardOpenOption.APPEND;
-import static java.nio.file.StandardOpenOption.CREATE;
 import java.nio.file.*;
 import java.io.*;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -128,7 +123,7 @@ public class register implements Serializable{
         rootPath = aFacesContext.getExternalContext().getRealPath("/"); 
         resourcePath = aFacesContext.getExternalContext().getResourcePaths("/").toString();
         
-        return "resources?faces-redict=true";
+        return "resources?faces-redirect=true";
     }
 }
 
