@@ -64,7 +64,6 @@ public class register implements Serializable{
             aRealPath = aFacesContext.getExternalContext().getRealPath("WEB-INF/data.txt");
             bw = new BufferedWriter(new FileWriter(aRealPath, true));
             bw.write(s);
-            bw.newLine();
             bw.close();
             }
          catch (IOException ex){
