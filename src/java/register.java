@@ -1,5 +1,5 @@
 /* CDI bean */
-
+/* using BufferedWriter PrintWriter to write to WEB-ING/data.txt */
 import javax.inject.Named;//CDI bean
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -25,13 +25,15 @@ public class register implements Serializable{
     private String name;
     private String address;
     private String yob;
-   
+    private String rootPath;
+    private String resourcePath;
+    
     public void writeToFile() {
 
-        
         System.out.println("now in writeToFile");
         Path aPath;
         String aRealPath;
+        BufferedWriter bw = null;
         
         // Convert the string to a byte array
         String s = this.email+"|"+this.pass+"|"+this.name + "|" + this.address + "|" + this.yob + "\r\n";
@@ -44,36 +46,31 @@ public class register implements Serializable{
         //  processing of a single JavaServer Faces request, and the rendering of the corresponding response
         //getCurrentInstance: return the FacesContext instance for the request that is being processed by the current thread
         //--ExternalContext: This class allows the Faces API to be unaware of the nature of its containing application environment
+        
         FacesContext aFacesContext = FacesContext.getCurrentInstance();
         String aContextName = aFacesContext.getExternalContext().getContextName();//not used
         //--getRealPath: Returns a String containg the real path for a given virtual path
         aRealPath = aFacesContext.getExternalContext().getRealPath("WEB-INF/data.txt");
-        if(aRealPath!=null){
-            System.out.println("real path exists, It is:  " + aRealPath);
-            aPath = Paths.get(aRealPath);
-        
-            try (OutputStream out = new BufferedOutputStream(
-                Files.newOutputStream(aPath, CREATE, APPEND))){
-                out.write(data, 0, data.length);
-                //System.out.println("path exists, " + data + "written to file" );
-            } catch (IOException x) {
-                System.err.println(x);
+        rootPath = aFacesContext.getExternalContext().getRealPath("/");
+        //aPath = Paths.get(aRealPath);//if file not exist, nullPointerException
+        try{
+            //create WEB-INF/data.txt if not exist.
+            if(aRealPath==null){
+               File aFile = new File(rootPath + "WEB-INF/data.txt");
+               aFile.createNewFile();
+               System.out.println("data.txt not exist. createNewFile");
             }
-        } else {
-            //Path aPath = Paths.get(aRealPath);
-            System.out.println("real path not exist");
-            aRealPath = aFacesContext.getExternalContext().getRealPath("/");
-            String aRealPath2 = aRealPath.concat("/WEB-INF/data.txt");
-            System.out.println("so the created path is: " + aRealPath2);
-            aPath = Paths.get(aRealPath2);
-            try (OutputStream out = new BufferedOutputStream(
-                Files.newOutputStream(aPath, CREATE, APPEND))){
-                out.write(data, 0, data.length);
-        //        System.out.println("writing to file");
-            } catch (IOException x) {
-                System.err.println(x);
+            //write customer data to WEB-INF/data.txt
+            aRealPath = aFacesContext.getExternalContext().getRealPath("WEB-INF/data.txt");
+            bw = new BufferedWriter(new FileWriter(aRealPath, true));
+            bw.write(s);
+            bw.newLine();
+            bw.close();
             }
+         catch (IOException ex){
+            System.err.println(ex);
         }
+        
     }
     
     //getters and setters
@@ -92,6 +89,12 @@ public class register implements Serializable{
     
     public String getYob(){return yob;}
     public void setYob(String yob) {this.yob = yob;}
+    
+    public String getRootPath(){return rootPath;}
+    public void setRootPath(String rootPath) {this.rootPath = rootPath;}
+    
+    public String getResourcePath(){return resourcePath;}
+    public void setResourcePath(String resourcePath) {this.resourcePath = resourcePath;}
     
     public String submit1(){
       System.out.println("continue button pressed.");
@@ -116,6 +119,17 @@ public class register implements Serializable{
         setAddress(null);
         setYob(null);
         return"index?faces-redirect=true";
+    }
+    
+    public String listResources(){
+      
+        FacesContext aFacesContext = FacesContext.getCurrentInstance();
+        String aContextName = aFacesContext.getExternalContext().getContextName();//not used
+        //--getRealPath: Returns a String containg the real path for a given virtual path
+        rootPath = aFacesContext.getExternalContext().getRealPath("/"); 
+        resourcePath = aFacesContext.getExternalContext().getResourcePaths("/").toString();
+        
+        return "resources?faces-redict=true";
     }
 }
 
