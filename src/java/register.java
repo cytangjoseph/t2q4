@@ -121,7 +121,7 @@ public class register implements Serializable{
         rootPath = aFacesContext.getExternalContext().getRealPath("/"); 
         resourcePath = aFacesContext.getExternalContext().getResourcePaths("/").toString();
         
-        return "resources?faces-redict=true";
+        return "resources?faces-redirect=true";
     }
 }
 
