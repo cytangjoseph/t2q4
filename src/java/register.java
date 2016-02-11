@@ -25,7 +25,9 @@ public class register implements Serializable{
     private String name;
     private String address;
     private String yob;
-   
+    private String rootPath;
+    private String resourcePath;
+    
     public void writeToFile(String email, String pass, String name, String address, String yob) {
 
         String aRealPath;
@@ -80,6 +82,12 @@ public class register implements Serializable{
     public String getYob(){return yob;}
     public void setYob(String yob) {this.yob = yob;}
     
+    public String getRootPath(){return rootPath;}
+    public void setRootPath(String rootPath) {this.rootPath = rootPath;}
+    
+    public String getResourcePath(){return resourcePath;}
+    public void setResourcePath(String resourcePath) {this.resourcePath = resourcePath;}
+    
     public String submit1(){
       System.out.println("continue button pressed.");
         return "part2?faces-redirect=true";
@@ -103,6 +111,17 @@ public class register implements Serializable{
         setAddress(null);
         setYob(null);
         return"index?faces-redirect=true";
+    }
+    
+     public String listResources(){
+        ;
+        FacesContext aFacesContext = FacesContext.getCurrentInstance();
+        String aContextName = aFacesContext.getExternalContext().getContextName();//not used
+        //--getRealPath: Returns a String containg the real path for a given virtual path
+        rootPath = aFacesContext.getExternalContext().getRealPath("/"); 
+        resourcePath = aFacesContext.getExternalContext().getResourcePaths("/").toString();
+        
+        return "resources?faces-redict=true";
     }
 }
 
