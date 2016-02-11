@@ -53,7 +53,7 @@ public class register implements Serializable{
             if(aRealPath==null){
                File aFile = new File(rootPath + "WEB-INF/data.txt");
                aFile.createNewFile();
-               System.out.println("data.txt not exist. createNewFile");
+            //   System.out.println("data.txt not exist. createNewFile");
             }
             //write customer data to WEB-INF/data.txt
             aRealPath = aFacesContext.getExternalContext().getRealPath("WEB-INF/data.txt");
