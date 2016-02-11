@@ -114,7 +114,7 @@ public class register implements Serializable{
     }
     
      public String listResources(){
-        ;
+        
         FacesContext aFacesContext = FacesContext.getCurrentInstance();
         String aContextName = aFacesContext.getExternalContext().getContextName();//not used
         //--getRealPath: Returns a String containg the real path for a given virtual path
