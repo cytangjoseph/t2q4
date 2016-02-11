@@ -23,7 +23,7 @@ public class register implements Serializable{
     private String rootPath;
     private String resourcePath;
     
-    public void writeToFile() {
+    public void writeToFile(String email, String pass, String name, String address, String yob) {
 
         System.out.println("now in writeToFile");
         Path aPath;
@@ -31,7 +31,7 @@ public class register implements Serializable{
         BufferedWriter bw = null;
         
         // Convert the string to a byte array
-        String s = this.email+"|"+this.pass+"|"+this.name + "|" + this.address + "|" + this.yob + "\r\n";
+        String s = email+"|"+  pass +"|"+ name +"|"+ address +"|"+ yob + "\r\n";
         byte data[] = s.getBytes();
         
         //--String path2 = FacesContext.getCurrentInstance().getExternalContext().getRealPath(
@@ -102,7 +102,7 @@ public class register implements Serializable{
         this.setAddress(address);
         this.setYob(yob);
         System.out.println("email: " + getEmail() + ", password: " + pass + ", name: " + getName() + ", address: " + address + ", yob: " + getYob());
-        writeToFile();
+        writeToFile(email,pass, name, address, yob);
         return"success?faces-redirect=true";
     }
        
@@ -122,7 +122,6 @@ public class register implements Serializable{
         //--getRealPath: Returns a String containg the real path for a given virtual path
         rootPath = aFacesContext.getExternalContext().getRealPath("/"); 
         resourcePath = aFacesContext.getExternalContext().getResourcePaths("/").toString();
-        
         return "resources?faces-redirect=true";
     }
 }
