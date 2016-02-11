@@ -32,6 +32,7 @@ public class register implements Serializable{
         System.out.println("now in writeToFile");
         Path aPath;
         String aRealPath;
+        File aFile=null;
         
         // Convert the string to a byte array
         String s = this.email+"|"+this.pass+"|"+this.name + "|" + this.address + "|" + this.yob + "\r\n";
@@ -47,34 +48,43 @@ public class register implements Serializable{
         FacesContext aFacesContext = FacesContext.getCurrentInstance();
         String aContextName = aFacesContext.getExternalContext().getContextName();//not used
         //--getRealPath: Returns a String containg the real path for a given virtual path
-        aRealPath = aFacesContext.getExternalContext().getRealPath("WEB-INF/data.txt");
-        if(aRealPath!=null){
+        aRealPath = aFacesContext.getExternalContext().getRealPath("WEB-INF");
+        aFile = new File(aRealPath,"data.txt");
+        if (!aFile.exists()){
+            try{
+            aFile.createNewFile();
+            }catch(IOException ex){
+            }
+        }
+        
+ //       if(aRealPath!=null){
             System.out.println("real path exists, It is:  " + aRealPath);
             aPath = Paths.get(aRealPath);
         
-            try (OutputStream out = new BufferedOutputStream(
+            try (BufferedOutputStream out = new BufferedOutputStream(
                 Files.newOutputStream(aPath, CREATE, APPEND))){
                 out.write(data, 0, data.length);
                 //System.out.println("path exists, " + data + "written to file" );
             } catch (IOException x) {
                 System.err.println(x);
             }
-        } else {
+        } 
+// else {
             //Path aPath = Paths.get(aRealPath);
-            System.out.println("real path not exist");
-            aRealPath = aFacesContext.getExternalContext().getRealPath("/");
-            String aRealPath2 = aRealPath.concat("/WEB-INF/data.txt");
-            System.out.println("so the created path is: " + aRealPath2);
-            aPath = Paths.get(aRealPath2);
-            try (OutputStream out = new BufferedOutputStream(
-                Files.newOutputStream(aPath, CREATE, APPEND))){
-                out.write(data, 0, data.length);
+//            System.out.println("real path not exist");
+//            aRealPath = aFacesContext.getExternalContext().getRealPath("/");
+//            String aRealPath2 = aRealPath.concat("/WEB-INF/data.txt");
+//            System.out.println("so the created path is: " + aRealPath2);
+//            aPath = Paths.get(aRealPath2);
+//            try (OutputStream out = new BufferedOutputStream(
+//                Files.newOutputStream(aPath, CREATE, APPEND))){
+//                out.write(data, 0, data.length);
         //        System.out.println("writing to file");
-            } catch (IOException x) {
-                System.err.println(x);
-            }
-        }
-    }
+//            } catch (IOException x) {
+//                System.err.println(x);
+//            }
+//        }
+//    }
     
     //getters and setters
  
