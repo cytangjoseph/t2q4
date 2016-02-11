@@ -1,5 +1,6 @@
 /* CDI bean */
-
+/* using BufferedOutputStream */
+/** http://www.ntu.edu.sg/home/ehchua/programming/java/j5b_io.html#zz-3. */
 import javax.inject.Named;//CDI bean
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
