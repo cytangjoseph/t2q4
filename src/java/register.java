@@ -48,8 +48,9 @@ public class register implements Serializable{
         FacesContext aFacesContext = FacesContext.getCurrentInstance();
         String aContextName = aFacesContext.getExternalContext().getContextName();//not used
         //--getRealPath: Returns a String containg the real path for a given virtual path
-        aRealPath = aFacesContext.getExternalContext().getRealPath("WEB-INF");
+        aRealPath = aFacesContext.getExternalContext().getRealPath("WEB-INF");//string
         aFile = new File(aRealPath+File.separator+"data.txt");
+        System.out.println("new File is: " + aFile);
 //1        if (!aFile.exists()){
 //1            try{
 //1            aFile.createNewFile(); //create aFile if not exists
@@ -60,7 +61,7 @@ public class register implements Serializable{
 //1            aRealPath = aFacesContext.getExternalContext().getRealPath("WEB-INF/data.txt");
             
 //1            aPath = Paths.get(aRealPath);//obtain the real path of WEB-INF/data.txt
-            aPath = Paths.get(aRealPath+File.separator+"data.txt");//see if it works
+            aPath = Paths.get(aRealPath+File.separator+"data.txt");//it works, get() needs a URI
 //1            System.out.println("real path exists, It is:  " + aRealPath);
             System.out.println("WEB-INF/data.txt exists?: " + aFacesContext.getExternalContext().getRealPath("WEB-INF/data.txt"));
             try (BufferedOutputStream out = new BufferedOutputStream(
