@@ -28,7 +28,6 @@ public class register implements Serializable{
     private String yob;
    
     public void writeToFile() {
-
         
         System.out.println("now in writeToFile");
         Path aPath;
@@ -51,23 +50,23 @@ public class register implements Serializable{
         //--getRealPath: Returns a String containg the real path for a given virtual path
         aRealPath = aFacesContext.getExternalContext().getRealPath("WEB-INF");
         aFile = new File(aRealPath+File.separator+"data.txt");
-        if (!aFile.exists()){
-            try{
-            aFile.createNewFile(); //create aFile if not exists
-            }catch(IOException ex){
-            }
-        }
-        
- 
-            aRealPath = aFacesContext.getExternalContext().getRealPath("WEB-INF/data.txt");
-            aPath = Paths.get(aRealPath);//obtain the real path of WEB-INF/data.txt
-            System.out.println("real path exists, It is:  " + aRealPath);
+//1        if (!aFile.exists()){
+//1            try{
+//1            aFile.createNewFile(); //create aFile if not exists
+//1            }catch(IOException ex){
+//1            }
+//1        }
+
+//1            aRealPath = aFacesContext.getExternalContext().getRealPath("WEB-INF/data.txt");
             
-        
+//1            aPath = Paths.get(aRealPath);//obtain the real path of WEB-INF/data.txt
+            aPath = Paths.get(aRealPath+File.separator+"data.txt");//see if it works
+//1            System.out.println("real path exists, It is:  " + aRealPath);
+            System.out.println("WEB-INF/data.txt exists?: " + aFacesContext.getExternalContext().getRealPath("WEB-INF/data.txt"));
             try (BufferedOutputStream out = new BufferedOutputStream(
                 Files.newOutputStream(aPath, CREATE, APPEND))){
                 out.write(data, 0, data.length);
-                //System.out.println("path exists, " + data + "written to file" );
+                System.out.println("path exists, " + data + "written to file" );
             } catch (IOException x) {
                 System.err.println(x);
             }
